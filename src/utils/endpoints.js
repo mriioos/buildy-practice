@@ -18,6 +18,9 @@ async function signup({ name, surname, email, password }){
 function login(){
 
     // Check for JWT?
+    if(localStorage.getItem('jwt')){
+        return true;
+    }
 }
 
 export default users = { signup, login }
