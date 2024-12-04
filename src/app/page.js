@@ -7,12 +7,16 @@ export default function Home() {
   const router = useRouter();
 
   // Check for JWT
-  const jwt = localStorage.getItem('buildyJWT')
-  if(jwt){
+  const jwt = localStorage.getItem('bildyJWT');
+  if(!jwt){
 
-    // Try login
-    
+    // Route to login page
+    router.push('/auth/login');
   }
   
-  router('/login');
+  return (
+    <>
+      <h1>¡Esto es el home!</h1>
+    </>
+  )
 }
