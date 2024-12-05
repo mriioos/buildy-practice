@@ -1,3 +1,5 @@
+'use server'
+
 const domain = 'https://bildy-rpmaya.koyeb.app';
 
 export async function signup({ name, surname, email, password }){
