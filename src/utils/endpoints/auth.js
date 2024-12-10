@@ -1,11 +1,11 @@
 'use server'
 
-const domain = 'https://bildy-rpmaya.koyeb.app';
+import { config, handler_json } from '@/utils/api_handler.js';
 
 export async function signup({ name, surname, email, password }){
 
     // Fetch signup endpoint
-    return await fetch(`${domain}/api/user/register`, { 
+    return await fetch(`${config.domain}/api/user/register`, { 
         method : 'POST', 
         headers : { 
             'Content-Type' : 'application/json' 
@@ -15,18 +15,13 @@ export async function signup({ name, surname, email, password }){
             password : password 
         })
     })
-    .then(response => {
-
-        // Give feeedback on error
-        if(response.ok) return response.json()
-        else throw new Error('Invalid credentials');
-    });
+    .then(handler_json);
 }
 
 export async function validate({ code }){
 
     // Fetch validation endpoint
-    return await fetch(`${domain}/api/user/validation`, { 
+    return await fetch(`${config.domain}/api/user/validation`, { 
         method : 'PUT', 
         headers : { 
             'Content-Type' : 'application/json'
@@ -35,17 +30,14 @@ export async function validate({ code }){
             code : code 
         })
     })
-    .then(response => {
-        if(response.ok) return response.json()
-        throw new Error('Invalid code');
-    })
+    .then(handler_json)
     .then(body => localStorage.setItem('bildyJWT', body.token));
 }
 
 export async function login({ email, password }){
 
     // Fetch login endpoint
-    return await fetch(`${domain}/api/user/login`, { 
+    return await fetch(`${config.domain}/api/user/login`, { 
         method : 'POST', 
         headers : { 
             'Content-Type' : 'application/json' 
@@ -53,11 +45,8 @@ export async function login({ email, password }){
         body : JSON.stringify({ 
             email : email, 
             password : password 
-        })
+        })  
     })
-    .then(response => {
-        if(response.ok) return response.json()
-        else throw new Error('Invalid credentials');
-    })
+    .then(handler_json)
     .then(body => localStorage.setItem('bildyJWT', body.token));
 }

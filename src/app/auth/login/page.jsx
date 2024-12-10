@@ -1,5 +1,5 @@
 'use client'
-import { login } from '@/utils/users.js';
+import { login } from '@/utils/endpoints/auth.js';
 import { try_catch } from '@/utils/tools';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup'
@@ -25,6 +25,8 @@ export default function Login(){
     const handleLogin = async (values) => {
 
         const [_, error] = await try_catch(login(values));
+
+        alert(error.message);
 
         if(error) alert('Invalid credentials')
         else router.push('/');

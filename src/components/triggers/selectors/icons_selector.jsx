@@ -16,7 +16,7 @@ export default function IconsSelector({ size, rows, options }) {
             <div className={`grid grid-rows-{${rows}} gap-4`}>
                 {options.map((option, index) => (
                     <div onClick={() => { setSelected(index); option.handler}}>
-                        <div className={`bg-[url('${option.imageURL}')] bg-cover bg-center`}></div>
+                        {/*"<div className={`bg-[url('${option.imageURL}')] bg-cover bg-center`}></div>"*/}"
                     </div>
                 ))}
             </div>

@@ -1,5 +1,5 @@
 'use client'
-import { signup } from '@/utils/users.js';
+import { signup } from '@/utils/endpoints/auth.js';
 import { try_catch } from '@/utils/tools';
 
 import { Formik, Form, Field, ErrorMessage } from 'formik';

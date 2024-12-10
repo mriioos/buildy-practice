@@ -1,5 +1,5 @@
 // Layout for the auth pages
-import "./globals.css";
+//import "./globals.css";
 
 export const metadata = { // Cambiar //
   title: "Create Next App",
