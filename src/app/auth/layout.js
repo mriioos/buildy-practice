@@ -1,5 +1,6 @@
 // Layout for the auth pages
-//import "./globals.css";
+import "@/app/globals.css";
+import styles from './auth_layout.module.css'
 
 export const metadata = { // Cambiar //
   title: "Create Next App",
@@ -7,11 +8,11 @@ export const metadata = { // Cambiar //
 };
 
 export default function AuthLayout({ children }) {
-  return (
-    <html lang="en">
-      <body>
-        {children}
-      </body>
-    </html>
-  );
+    return (
+        <section className="bg-black h-full w-full flex content-center justify-center">
+            <div className="bg-slate-300 rounded-md w-fit h-fit">
+                {children}
+            </div>
+        </section>
+    )
 }

@@ -11,12 +11,14 @@ export default function IconsSelector({ size, rows, options }) {
     // Calc height of each option
     const option_size = DEFAULT_OPTION_SIZE * size;
 
+    // option.imageURL para el fondo
+
     return (
         <div className="absolute">
             <div className={`grid grid-rows-{${rows}} gap-4`}>
                 {options.map((option, index) => (
                     <div onClick={() => { setSelected(index); option.handler}}>
-                        {/*"<div className={`bg-[url('${option.imageURL}')] bg-cover bg-center`}></div>"*/}"
+                        <div className={`bg-black bg-cover bg-center`}></div>
                     </div>
                 ))}
             </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import 
+//import "./globals.css";
 
 export const metadata = {
     title: "Dash Board",
@@ -9,26 +9,24 @@ export const metadata = {
 
 export default function DashBoardLayout({ children }){
     return (
-        <html lang="en">
-            <body>
-                <nav className=""> {/* Side Bar */}
+        <section>
+            <nav className=""> {/* Side Bar */}
 
+            </nav>
+            <section> {/* Main Content */}
+                <nav> {/* Top Bar */}
+                    <div> {/* Section description */}
+
+                    </div>
+                    <div> {/* Search bar */}
+
+                    </div>
+                    <div> {/* Action buttons */}
+                        
+                    </div>
                 </nav>
-                <section> {/* Main Content */}
-                    <nav> {/* Top Bar */}
-                        <div> {/* Section description */}
-
-                        </div>
-                        <div> {/* Search bar */}
-
-                        </div>
-                        <div> {/* Action buttons */}
-                            
-                        </div>
-                    </nav>
-                    {children}
-                </section>
-            </body>
-        </html>
+                {children}
+            </section>
+        </section>
     );
 };

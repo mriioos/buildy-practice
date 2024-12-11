@@ -5,7 +5,7 @@ export default function SidebarButton({ text, imageURL, route }) {
     const router = useRouter();
     return (
         <div>
-            {/*"<div onClick={() => router.push(route)} className={`bg-[url('${imageURL}')] bg-cover bg-center`}></div>"*/}
+            <div onClick={() => router.push(route)} className={`bg-black bg-cover bg-center`}></div>
             <p>{text}</p>
         </div>
     );

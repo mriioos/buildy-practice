@@ -1,22 +1,19 @@
 'use client'
 
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function Home() {
 
-  const router = useRouter();
+    const router = useRouter();
 
-  // Check for JWT
-  const jwt = localStorage.getItem('bildyJWT');
-  if(!jwt){
+    useEffect(() => {
 
-    // Route to login page
-    router.push('/auth/login');
-  }
-  
-  return (
-    <>
-      <h1>¡Esto es el home!</h1>
-    </>
-  )
+        // Check for JWT
+        const jwt = localStorage.getItem('bildyJWT');
+
+        router.push(jwt ? '/user' : '/auth/login');
+    }, []);
+
+    return (<></>)
 }
