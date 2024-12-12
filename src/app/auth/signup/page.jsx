@@ -1,31 +1,65 @@
 'use client'
+
+import "@/app/globals.css";
+
 import { signup } from '@/utils/endpoints/auth.js';
 import { try_catch } from '@/utils/tools';
 
-import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
+import EasyForm from '@/components/triggers/forms/EasyForm.jsx';
+
+// Sign up fields definition
+
+const fields = {
+    "Complete name" : {
+        name : {
+            label : '',
+            type : 'text',
+            placeholder : ' John',
+            initial : '',
+            validation : Yup.string().required('Required')
+        },
+        lastname : {
+            label : '',
+            type : 'text',
+            placeholder : ' Doe',
+            initial : '',
+            validation : Yup.string().required('Required')
+        }
+    },
+    email : {
+        label : 'Email',
+        type : 'email',
+        placeholder : ' johndoe@example.ext',
+        initial : '',
+        validation : Yup.string().email('Invalid email').required('Required')
+    },
+    "" : { // Aquí se puede poner un campo vacío para que no haya un título, pero solo se puede una vez (Habría que cambiarlo)
+        password : {
+            label : 'Password',
+            type : 'password',
+            placeholder : ' ********',
+            initial : '',
+            validation : Yup.string().min(6, 'Must be 6 characters or more').required('Required')
+        },
+        confirmPassword : {
+            label : 'Confirm Password',
+            type : 'password',
+            placeholder : ' ********',
+            initial : '',
+            validation : Yup.string()
+                .oneOf([Yup.ref('password'), null], 'Passwords must match')
+                .required('Confirm Password is required')
+        }
+    }
+}
+
 export default function SignUp(){
 
     const router = useRouter();
-
-    // Define validation schema
-    const validationSchema = Yup.object({
-        email: Yup.string().email('Invalid email').required('Required'),
-        password: Yup.string().min(6, 'Must be 6 characters or more').required('Required'),
-        confirmPassword: Yup.string()
-            .oneOf([Yup.ref('password'), null], 'Passwords must match')
-            .required('Confirm Password is required')
-    });
-
-    // Define initial values
-    const initialValues = {
-        email: '',
-        password: '',
-        confirmPassword: ''
-    }
 
     const handleSignup = async (values) => {
 
@@ -37,56 +71,15 @@ export default function SignUp(){
 
     return (
         <>
-            <h1 className="auth-form-title">Sign Up</h1>
-            <Formik 
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={handleSignup}
-            >
-                <Form>
-                    
-                    {/* Name Field */}
-                    <div className="auth-form-field">
-                        <label className="">Name</label>
-                        <Field name="name" type="text" placeholder="John" />
-                        <ErrorMessage name="name" component="div" style={{ color: 'red' }} />
-                    </div>
+            <EasyForm 
+                title="Sign Up"
+                fields={fields} 
+                handleSubmit={handleSignup} 
+                submit_button_text="Sign up" 
+                custom_styles={null}
+            />
 
-                    {/* Last name Field */}
-                    <div className="auth-form-field">
-                        <label htmlFor="lastname">Last name</label>
-                        <Field name="lastname" type="text" placeholder="Doe" />
-                        <ErrorMessage name="lastname" component="div" style={{ color: 'red' }} />
-                    </div>
-
-                    {/* Email Field */}
-                    <div className="auth-form-field">
-                        <label htmlFor="email">Email</label>
-                        <Field name="email" type="email" placeholder="johndoe@example.ext" />
-                        <ErrorMessage name="email" component="div" style={{ color: 'red' }} />
-                    </div>
-
-                    {/* Password Field */}
-                    <div className="auth-form-field">
-                        <label htmlFor="password">Password</label>
-                        <Field name="password" type="password" placeholder="********" />
-                        <ErrorMessage name="password" component="div" style={{ color: 'red' }} />
-                    </div>
-
-                    {/* Confirm Password Field */}
-                    <div className="auth-form-field">
-                        <label htmlFor="confirmPassword">Confirm Password</label>
-                        <Field name="confirmPassword" type="password" placeholder="********" />
-                        <ErrorMessage name="confirmPassword" component="div" style={{ color: 'red' }} />
-                    </div>
-
-                    {/* Submit Button */}
-                    <div>
-                        <button type="submit">Sign up</button>
-                    </div>
-                </Form>
-            </Formik>
-            <Link href="/auth/login">Already have an account?</Link>
+            <Link href="/auth/login" className="m-auto w-fit block mt-4">Already have an account?</Link>
         </> 
     );
 }

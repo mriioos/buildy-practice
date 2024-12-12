@@ -2,24 +2,25 @@
 import { validate } from '@/utils/endpoints/auth.js';
 import { try_catch } from '@/utils/tools';
 
-import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import EasyForm from '@/components/triggers/forms/EasyForm.jsx';
+
+// Validation fields definition
+const fields = {
+    code : {
+        label : 'Code',
+        type : 'text',
+        placeholder : ' 123456',
+        initial : '',
+        validation : Yup.string().required('Required')
+    }
+}
 
 export default function Validation(){
 
     const router = useRouter();
-
-    // Define validation schema
-    const validationSchema = Yup.object({
-        code: Yup.string().required('Required')
-    });
-
-    // Define initial values
-    const initialValues = {
-        code: ''
-    };
 
     const handleValidate = async (values) => {        
         
@@ -31,28 +32,13 @@ export default function Validation(){
 
     return (
         <>
-            <h1>Validate</h1>
-            <Formik 
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={handleValidate}
-            >
-                <Form>
-                    
-                    {/* Code Field */}
-                    <div>
-                        <label htmlFor="code">Code</label>
-                        <Field name="code" type="text" placeholder="123456" />
-                        <ErrorMessage name="code" component="div" style={{ color: 'red' }} />
-                    </div>
-
-                    {/* Submit Button */}
-                    <div>
-                        <button type="submit">Validate</button>
-                    </div>
-                </Form>
-            </Formik>
-            <Link href="/auth/login">Already have an account?</Link>
+            <EasyForm
+                title="Validation"
+                fields={fields}
+                handleSubmit={handleValidate}
+                submit_button_text="Submit"
+            />
+            <Link href="/auth/login" className="m-auto w-fit block mt-4">Already have an account?</Link>
         </> 
     );
 }
