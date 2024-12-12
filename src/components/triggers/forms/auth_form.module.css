@@ -1,0 +1,12 @@
+.auth-form-title{
+    text-align:center;
+    font-size:large;
+}
+
+.auth-form-field{
+
+}
+
+.auth-form-field > label{
+    display:block;
+}

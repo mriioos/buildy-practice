@@ -13,13 +13,18 @@ export default function Login(){
     // Define validation schema
     const validationSchema = Yup.object({
         email: Yup.string().email('Invalid email').required('Required'),
-        password: Yup.string().min(6, 'Must be 6 characters or more').required('Required')
+        password: Yup.string().required('Required')
     });
 
     // Define initial values
     const initialValues = {
         email: '',
         password: ''
+    }
+
+    const labels = {
+        email: 'Email',
+        password: 'Password'
     }
 
     const handleLogin = async (values) => {

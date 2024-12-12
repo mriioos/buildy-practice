@@ -37,7 +37,7 @@ export default function SignUp(){
 
     return (
         <>
-            <h1>Sign Up</h1>
+            <h1 className="auth-form-title">Sign Up</h1>
             <Formik 
                 initialValues={initialValues}
                 validationSchema={validationSchema}
@@ -46,35 +46,35 @@ export default function SignUp(){
                 <Form>
                     
                     {/* Name Field */}
-                    <div>
-                        <label htmlFor="name">Name</label>
+                    <div className="auth-form-field">
+                        <label className="">Name</label>
                         <Field name="name" type="text" placeholder="John" />
                         <ErrorMessage name="name" component="div" style={{ color: 'red' }} />
                     </div>
 
                     {/* Last name Field */}
-                    <div>
+                    <div className="auth-form-field">
                         <label htmlFor="lastname">Last name</label>
                         <Field name="lastname" type="text" placeholder="Doe" />
                         <ErrorMessage name="lastname" component="div" style={{ color: 'red' }} />
                     </div>
 
                     {/* Email Field */}
-                    <div>
+                    <div className="auth-form-field">
                         <label htmlFor="email">Email</label>
                         <Field name="email" type="email" placeholder="johndoe@example.ext" />
                         <ErrorMessage name="email" component="div" style={{ color: 'red' }} />
                     </div>
 
                     {/* Password Field */}
-                    <div>
+                    <div className="auth-form-field">
                         <label htmlFor="password">Password</label>
                         <Field name="password" type="password" placeholder="********" />
                         <ErrorMessage name="password" component="div" style={{ color: 'red' }} />
                     </div>
 
                     {/* Confirm Password Field */}
-                    <div>
+                    <div className="auth-form-field">
                         <label htmlFor="confirmPassword">Confirm Password</label>
                         <Field name="confirmPassword" type="password" placeholder="********" />
                         <ErrorMessage name="confirmPassword" component="div" style={{ color: 'red' }} />

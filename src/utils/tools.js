@@ -12,7 +12,7 @@ export async function try_catch(promise){
 export function select(key, switcher, separator){
 
     // Get value directly if separator is not defined
-    if(!separator) return switcher[key] || switcher['default'];
+    if(!separator) return switcher[key] ?? switcher['default'];
 
     // Find first key in switcher that includes the search-by key if separator is defined
     const found_key = switcher[key] ?? Object.keys(switcher).find(switcher_key =>

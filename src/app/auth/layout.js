@@ -1,6 +1,10 @@
 // Layout for the auth pages
 import "@/app/globals.css";
 import styles from './auth_layout.module.css'
+import './auth_pages.css'; // Importamos aquí los estilos para que se apliquen a todas las páginas interiores
+
+import Image from 'next/image'
+import Link from "next/link";
 
 export const metadata = { // Cambiar //
   title: "Create Next App",
@@ -8,10 +12,30 @@ export const metadata = { // Cambiar //
 };
 
 export default function AuthLayout({ children }) {
-    return (
-        <section className="bg-black h-full w-full flex content-center justify-center">
-            <div className="bg-slate-300 rounded-md w-fit h-fit">
-                {children}
+    return ( // bg-[url('/multimedia/img/auth-bg.jpg')]
+        <section id="auth-layout-body" className={`${styles['animated-gradient']} bg-gradient-to-bl from-purple-900 to-green-500  bg-cover bg-center h-full w-full flex items-center justify-center`}>
+            <div id="auth-form-container" className="bg-white w-fit min-w-[35vw] h-fit py-5 px-6 shadow-xl rounded-md">
+                <header id="auth-form-header" className="flex items-center w-fit h-fit">
+                    <Link href="/">
+                        <Image
+                            src="/multimedia/img/qiskit-logo.jpg" // Path relative to the `public/` folder
+                            alt="A beautiful view"
+                            width={55} // Set width
+                            height={55} // Set height
+                        />
+                    </Link>
+                </header>
+                <main id="auth-form-content" className="min-h-[20vh] pb-5 px-2">
+                    {children}
+                </main>
+                <footer id="auth-form-footer" className="h-fit w-full text-slate-600 flex justify-between">
+                    <Link href="/terms">
+                        <p id="terms-of-use" className="">Terms of use</p>
+                    </Link>
+                    <Link href="/about">
+                        <p id="about" className="">About</p>
+                    </Link>
+                </footer>
             </div>
         </section>
     )
