@@ -15,7 +15,9 @@ export default function NavBar({ position, className, children }) {
 
     return (
         <nav className={`flex ${pos_to_class[position]} ${className}`}>
-            {children}
+            <div className="p-4">
+                {children}
+            </div>
         </nav>
     );
 }

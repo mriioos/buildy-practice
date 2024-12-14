@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-export default function UserSummary(){
+export default function Provider(){
     const router = useRouter();
 
     // Check if user is logged in
@@ -11,7 +11,7 @@ export default function UserSummary(){
 
     return (
         <>
-            User summary!
+            Provider!
         </>
     );
 }
