@@ -7,6 +7,9 @@ import * as Yup from 'yup'
  * Notes:
  * Fields names must be unique, even between groups
  * "type" cannot be a name of a group or a name of a field, just a property of a field
+ * Names of groups that start with '_' will not be displayed (Inner items will show as normal)
+ * By default, this component uses the styles defined in the default_easy_form.module.css file
+ * By default, the validation schema is generated using Yup.object, you can change this by providing a toFormikValidationSchema function
  */
 
 /**
@@ -71,7 +74,7 @@ function reduce_property(fields, property){
  * @param {{ [name : string] : Field }} fields
  * @returns 
  */
-export default function EasyForm({ title, fields, handleSubmit, submit_button_text, custom_styles }){    
+export default function EasyForm({ title, fields, handleSubmit, submit_button_text, custom_styles, toFormikValidationSchema }){    
 
     /* Field creation utilities */
     // Use the default styles if no custom styles are provided
@@ -86,7 +89,7 @@ export default function EasyForm({ title, fields, handleSubmit, submit_button_te
             // Create a field for each entry of the group, with the key as the group name
             return(
                 <div key={key} className={form_styles['easy-form-group']}>
-                    <label>{key}</label>
+                    <label>{key.startsWith('_') ? '' : key}</label>
                     {Object.entries(component).map(createField)}
                 </div>
             )
@@ -108,12 +111,15 @@ export default function EasyForm({ title, fields, handleSubmit, submit_button_te
     // This is useful to then extract the validation schema and the initial values schema
     const flat_fields = flatten(fields, (component) => component.type != null); // If field.type exists, then it is a field and not a groupt
 
+    // Select the formik validation schema converter function
+    const toFormikValidationSchemaMethod = toFormikValidationSchema ?? Yup.object; // Default to Yup.object if not provided
+
     return(
         <>        
             <h1 className={`${form_styles['easy-form-title']}`}>{title}</h1>
             <Formik 
                 initialValues={reduce_property(flat_fields, 'initial')}
-                validationSchema={Yup.object(reduce_property(flat_fields, 'validation'))}
+                validationSchema={toFormikValidationSchemaMethod(reduce_property(flat_fields, 'validation'))}
                 onSubmit={handleSubmit}
             >
                 <Form>

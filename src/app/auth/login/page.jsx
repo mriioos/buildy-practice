@@ -30,12 +30,13 @@ export default function Login(){
 
     const handleLogin = async (values) => {
 
-        const [_, error] = await try_catch(login(values));
+        const [success, error] = await try_catch(login(values));
 
-        alert(error.message);
-
-        if(error) alert('Invalid credentials')
-        else router.push('/');
+        if(success){
+            localStorage.setItem('bildyJWT', success.token);
+            router.push('/');
+        }
+        else alert(error.message)
     }
 
     return (
@@ -44,7 +45,9 @@ export default function Login(){
                 title="Login"
                 fields={fields}
                 handleSubmit={handleLogin}
-                submit_button_text="Submit"
+                submit_button_text="Submit" 
+                custom_styles={null}
+                toFormikValidationSchema={Yup.object}
             />
             
             <Link href="/auth/signup" className="m-auto w-fit block mt-4">Don't have an account?</Link>

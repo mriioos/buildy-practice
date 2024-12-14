@@ -3,6 +3,7 @@
 import { config, handler_json } from '@/utils/api_handler.js';
 
 async function get_one(id, token){
+    
     return await fetch(`${config.domain}/api/client/${id}`, {
         method : 'GET',
         headers : {

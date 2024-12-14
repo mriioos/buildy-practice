@@ -15,23 +15,23 @@ export async function signup({ name, surname, email, password }){
             password : password 
         })
     })
-    .then(handler_json);
+    .then(handler_json)
 }
 
-export async function validate({ code }){
+export async function validate({ code }, token ){
 
     // Fetch validation endpoint
     return await fetch(`${config.domain}/api/user/validation`, { 
         method : 'PUT', 
         headers : { 
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            'Authorization' : `Bearer ${token}`
         }, 
         body : JSON.stringify({ 
-            code : code 
+            code : code
         })
     })
     .then(handler_json)
-    .then(body => localStorage.setItem('bildyJWT', body.token));
 }
 
 export async function login({ email, password }){
@@ -48,5 +48,4 @@ export async function login({ email, password }){
         })  
     })
     .then(handler_json)
-    .then(body => localStorage.setItem('bildyJWT', body.token));
 }

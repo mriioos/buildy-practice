@@ -23,11 +23,13 @@ export default function Validation(){
     const router = useRouter();
 
     const handleValidate = async (values) => {        
-        
-        const [_, error] = await try_catch(validate(values));
 
-        if(error) alert('Invalid credentials')
-        else router.push('/');
+        const token = localStorage.getItem('bildyJWT')
+
+        const [success, error] = await try_catch(validate(values, token));
+
+        if(success) router.push('/');
+        else alert(error.message)
     }
 
     return (
@@ -36,7 +38,9 @@ export default function Validation(){
                 title="Validation"
                 fields={fields}
                 handleSubmit={handleValidate}
-                submit_button_text="Submit"
+                submit_button_text="Submit" 
+                custom_styles={null}
+                toFormikValidationSchema={Yup.object}
             />
             <Link href="/auth/login" className="m-auto w-fit block mt-4">Already have an account?</Link>
         </> 

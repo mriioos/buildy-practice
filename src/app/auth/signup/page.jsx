@@ -37,7 +37,7 @@ const fields = {
         initial : '',
         validation : Yup.string().email('Invalid email').required('Required')
     },
-    "" : { // Aquí se puede poner un campo vacío para que no haya un título, pero solo se puede una vez (Habría que cambiarlo)
+    "_Passwords" : { // Nombre de grupo oculto
         password : {
             label : 'Password',
             type : 'password',
@@ -63,10 +63,13 @@ export default function SignUp(){
 
     const handleSignup = async (values) => {
 
-        const [_, error] = await try_catch(signup(values));
+        const [success, error] = await try_catch(signup(values));
 
-        if(error) alert('Invalid credentials')
-        else router.push('/auth/validation');
+        if(success) {
+            localStorage.setItem('bildyJWT', success.token);
+            router.push('/auth/validation');
+        }
+        else alert(error.message)
     }
 
     return (
@@ -77,6 +80,7 @@ export default function SignUp(){
                 handleSubmit={handleSignup} 
                 submit_button_text="Sign up" 
                 custom_styles={null}
+                toFormikValidationSchema={Yup.object}
             />
 
             <Link href="/auth/login" className="m-auto w-fit block mt-4">Already have an account?</Link>

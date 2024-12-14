@@ -1,6 +1,5 @@
 // Layout for the auth pages
 import "@/app/globals.css";
-import styles from './auth_layout.module.css'
 import './auth_pages.css'; // Importamos aquí los estilos para que se apliquen a todas las páginas interiores
 
 import Image from 'next/image'
@@ -12,14 +11,14 @@ export const metadata = { // Cambiar //
 };
 
 export default function AuthLayout({ children }) {
-    return ( // bg-[url('/multimedia/img/auth-bg.jpg')]
-        <section id="auth-layout-body" className={`${styles['animated-gradient']} bg-gradient-to-bl from-purple-900 to-green-500  bg-cover bg-center h-full w-full flex items-center justify-center`}>
+    return (
+        <section id="auth-layout-body" className="h-full w-full flex items-center justify-center">
             <div id="auth-form-container" className="bg-white w-fit min-w-[35vw] h-fit py-5 px-6 shadow-xl rounded-md">
                 <header id="auth-form-header" className="flex items-center w-fit h-fit">
                     <Link href="/">
                         <Image
                             src="/multimedia/img/qiskit-logo.jpg" // Path relative to the `public/` folder
-                            alt="A beautiful view"
+                            alt="Quiskit Logo"
                             width={55} // Set width
                             height={55} // Set height
                         />
