@@ -2,7 +2,10 @@
 
 import { useRouter } from 'next/navigation';
 
+import MainContentLayout from '../MainContentLayout.jsx';
+
 export default function Settings(){
+    
     const router = useRouter();
 
     // Check if user is logged in
@@ -10,8 +13,8 @@ export default function Settings(){
     if(!jwt) router.push('/auth/login');
 
     return (
-        <>
-            Settings!
-        </>
+        <MainContentLayout title="Settings" subtitle="Account settings"> 
+            
+        </MainContentLayout>
     );
 }
