@@ -18,14 +18,14 @@ const fields = {
         name : {
             label : '',
             type : 'text',
-            placeholder : ' John',
+            placeholder : 'John',
             initial : '',
             validation : Yup.string().required('Required')
         },
         lastname : {
             label : '',
             type : 'text',
-            placeholder : ' Doe',
+            placeholder : 'Doe',
             initial : '',
             validation : Yup.string().required('Required')
         }
@@ -33,7 +33,7 @@ const fields = {
     email : {
         label : 'Email',
         type : 'email',
-        placeholder : ' johndoe@example.ext',
+        placeholder : 'johndoe@example.ext',
         initial : '',
         validation : Yup.string().email('Invalid email').required('Required')
     },
@@ -41,14 +41,14 @@ const fields = {
         password : {
             label : 'Password',
             type : 'password',
-            placeholder : ' ********',
+            placeholder : '********',
             initial : '',
             validation : Yup.string().min(6, 'Must be 6 characters or more').required('Required')
         },
         confirmPassword : {
             label : 'Confirm Password',
             type : 'password',
-            placeholder : ' ********',
+            placeholder : '********',
             initial : '',
             validation : Yup.string()
                 .oneOf([Yup.ref('password'), null], 'Passwords must match')

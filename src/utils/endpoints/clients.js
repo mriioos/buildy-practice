@@ -1,4 +1,4 @@
-'use server'
+'use client'
 
 import { config, handler_json } from '@/utils/api_handler.js';
 
@@ -48,7 +48,7 @@ async function post_one({ name, cif, address : { street, number, postal, city, p
 }
 
 
-export default clients = {
+export const clients_api = {
     get : {
         one : get_one,
         all : get_all
@@ -56,4 +56,4 @@ export default clients = {
     post : {
         one : post_one
     }
-}
+};

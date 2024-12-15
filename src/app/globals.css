@@ -61,6 +61,9 @@ body {
 }
 
 .animated-gradient{
+    background-image: linear-gradient(to bottom left, #3c0d70, #22c55e); /* from purple-900 to green-500 */
+    background-size: cover;
+    background-position: center; 
     background-size:300% 300%;
     animation:gradient 10s linear infinite;
 }

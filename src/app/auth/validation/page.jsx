@@ -12,7 +12,7 @@ const fields = {
     code : {
         label : 'Code',
         type : 'text',
-        placeholder : ' 123456',
+        placeholder : '123456',
         initial : '',
         validation : Yup.string().required('Required')
     }

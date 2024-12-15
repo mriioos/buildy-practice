@@ -1,4 +1,4 @@
-'use server'
+'use client'
 
 import { config, handler_json } from '@/utils/api_handler.js'; 
 
@@ -46,7 +46,7 @@ async function post_one({ clientId, projectId, format, material, hours, descript
     })
 }
 
-export default deliverynotes = {
+export const deliverynotes_api = {
     get : {
         pdf : get_pdf,
         all : get_all
@@ -54,4 +54,4 @@ export default deliverynotes = {
     post : {
         one : post_one
     }
-}
+};

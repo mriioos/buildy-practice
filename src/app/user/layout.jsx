@@ -2,7 +2,6 @@ import "@/app/globals.css";
 import React from 'react';
 
 import SideBar from '@/components/actuators/bars/SideBar.jsx';
-import TopBar from '@/components/actuators/bars/TopBar.jsx';
 
 export const metadata = {
     title: "Dash Board",

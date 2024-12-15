@@ -11,14 +11,14 @@ const fields = {
     email : {
         label : 'Email',
         type : 'email',
-        placeholder : ' johndoe@example.ext',
+        placeholder : 'johndoe@example.ext',
         initial : '',
         validation : Yup.string().email('Invalid email').required('Required')
     },
     password : {
         label : 'Password',
         type : 'password',
-        placeholder : ' ********',
+        placeholder : '********',
         initial : '',
         validation : Yup.string().required('Required')
     }

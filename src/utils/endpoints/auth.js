@@ -1,4 +1,4 @@
-'use server'
+'use client'
 
 import { config, handler_json } from '@/utils/api_handler.js';
 

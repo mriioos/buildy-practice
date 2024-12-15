@@ -1,4 +1,4 @@
-'use server'
+'use client'
 
 import { config, handler_json } from '@/utils/api_handler.js';
 
@@ -79,7 +79,7 @@ export async function put_one(id, { name, code, projectCode, email, clientId, ad
     .then(handler_json);
 }
 
-export default clients = {
+export const projects_api = {
     get : {
         one : get_one,
         all : get_all
@@ -90,4 +90,4 @@ export default clients = {
     put : {
         one : put_one
     }
-}
+};

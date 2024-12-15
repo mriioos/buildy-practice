@@ -26,7 +26,7 @@ export default function UserProfile() {
                     style={{ objectFit: 'contain' }}
                 />
             </div>
-            <div className="flex flex-col items-center justify-left w-fit h-full pl-2"> {/* User Data */}
+            <div className=" hidden lg:flex flex-col items-center justify-left w-fit h-full pl-2"> {/* User Data */}
                 <p className="w-full text-black text-sm text-left">{user.name} {user.surname}</p>
                 <p className="w-full text-slate-600 text-xs text-left">{user.email}</p>
             </div>

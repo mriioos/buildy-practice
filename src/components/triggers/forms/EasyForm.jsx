@@ -99,7 +99,7 @@ export default function EasyForm({ title, fields, handleSubmit, submit_button_te
         return(
             <div key={key} className={`${form_styles['easy-form-field']}`}>
                 <label htmlFor={key}>{component.label}</label>
-                <Field name={key} type={component.type} placeholder={component.placeholder} />
+                <Field name={key} type={component.type} placeholder={component.placeholder} className="pl-2 bg-slate-100"/>
                 <ErrorMessage name={key} component="div" style={{ color: 'red' }} />
             </div>
         )
@@ -127,7 +127,7 @@ export default function EasyForm({ title, fields, handleSubmit, submit_button_te
                     {Object.entries(fields).map(createField)}
 
                     {/* Submit Button */}
-                    <button type="submit" className={`${form_styles['easy-form-button']}`}>{submit_button_text}</button>
+                    <button type="submit" className={`shadow-md ${form_styles['easy-form-button']}`}>{submit_button_text}</button>
                 </Form>
             </Formik>
         </>

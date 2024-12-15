@@ -20,7 +20,7 @@ export async function handler_json(response){
     // Give feedback on error
     return response.ok 
     ? await response.json()
-    : select(response.status, error_messages)
+    : Promise.reject(select(response.status, error_messages));
 }
 
 // Response handler for text body
@@ -29,5 +29,5 @@ export async function handler_text(response){
     // Give feedback on error
     return response.ok 
     ? await response.text()
-    : select(response.status, error_messages)
+    : Promise.reject(select(response.status, error_messages));
 }
