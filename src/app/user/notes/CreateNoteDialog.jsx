@@ -91,8 +91,6 @@ export default function CreateNoteDialog({ closeDialog, jwt }){
     
         if(!jwt) return;
 
-        console.log(values);
-
         const [_, error] = await try_catch(deliverynotes_api.post.one(values, jwt));
 
         if(error) setAlert({ // Show error message
