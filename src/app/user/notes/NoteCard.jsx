@@ -11,6 +11,20 @@ export default function NoteCard({ note, setAlert, jwt }){
     const [isOpen, setIsOpen] = useState(false);
 
     const getFields = (format) => ({
+        clientId : {
+            label : 'Client ID',
+            type : 'text',
+            placeholder : '123456',
+            initial : null,
+            validation : Yup.string().required('Required')
+        },
+        projectId : {
+            label : 'Project ID',
+            type : 'text',
+            placeholder : '123456',
+            initial : null,
+            validation : Yup.string().required('Required')
+        },
         format : {
             label : 'Format',
             type : 'text',

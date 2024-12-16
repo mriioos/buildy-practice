@@ -8,7 +8,7 @@ import MainContentLayout from '../MainContentLayout.jsx';
 import ContentPad from '@/components/actuators/figures/ContentPad.jsx';
 
 import ProjectsOverview from './ProjectsOverview.jsx';
-import CreateProjectDialog from './CreateProjectDialog.jsx';
+import CreateProjectDialog from '../notes/CreateNoteDialog.jsx';
 
 export default function Projects(){
 

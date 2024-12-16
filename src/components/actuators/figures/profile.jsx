@@ -1,19 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect } from "react";
 
-export default function UserProfile() {
+export default function UserProfile({ name = 'John', surname = 'Doe', email = 'johndoe@domain.ext', imgURL = '/multimedia/img/icons/user.svg'}) {
 
     const user = { // Declare user data object (And set default values)
-        name : 'John',
-        surname : 'Doe',
-        email : 'johndoe@domain.ext',
-        img : '/multimedia/img/icons/user.svg'
+        name : name,
+        surname : surname,
+        email : email,
+        img : imgURL
     }
-
-    useEffect(() => {
-
-    }, []);
 
     return (
         <Link href="/user/settings" className="flex w-fit h-fit items-center"> {/* User Image */}

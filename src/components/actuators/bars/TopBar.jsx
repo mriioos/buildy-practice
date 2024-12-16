@@ -7,10 +7,35 @@ import SearchBar from "@/components/triggers/searchbars/SearchBar.jsx";
 import NavButton from "@/components/triggers/buttons/TopBarButton";
 import Profile from "@/components/actuators/figures/Profile.jsx";
 
+import { useEffect, useState } from 'react';
+import { users_api } from "@/utils/endpoints/user";
+
 export default function TopBar({ page_title, page_subtitle, searchItems, similarityFunction, searchGet }) {
 
     const similarityAcceptance = 0.03;
     const limit = 5;
+
+    const [user, setUser] = useState({
+        name: 'John',
+        surname: 'Doe',
+        email : 'johndoe@domain.ext', 
+        imgURL : '/multimedia/img/icons/user.svg'
+    });
+
+    useEffect(() => {
+        const jwt = localStorage.getItem('bildyJWT');
+
+        if(!jwt) return;
+
+        users_api.get.one(jwt).then((user_data) => {
+            setUser({
+                name : user_data.name || 'John',
+                surname : user_data.surnames || 'Doe',
+                email : user_data.email || 'johndoe@domain.ext', 
+                imgURL : user_data.imgURL || '/multimedia/img/icons/user.svg'
+            });
+        });
+    }, []);
 
     return (
         <nav className='w-full h-fit'>
@@ -23,7 +48,7 @@ export default function TopBar({ page_title, page_subtitle, searchItems, similar
                     <NavButton iconURL="/multimedia/img/icons/letter.svg" width={28}/>
                     <NavButton iconURL="/multimedia/img/icons/bell.svg" width={28}/>
                 </div>
-                <Profile/> {/* User Profile */}
+                <Profile name={user.name} surname={user.surname} email={user.email} imgURL={user.imgURL}/> {/* User Profile */}
             </div>
         </nav>
     );

@@ -14,6 +14,20 @@ export default function CreateNoteDialog({ closeDialog, jwt }){
     const [alert, setAlert] = useState({ visible : false, message : '', iconURL : null });
 
     const getFields = (format) => ({
+        clientId : {
+            label : 'Client ID',
+            type : 'text',
+            placeholder : '123456',
+            initial : null,
+            validation : Yup.string().required('Required')
+        },
+        projectId : {
+            label : 'Project ID',
+            type : 'text',
+            placeholder : '123456',
+            initial : null,
+            validation : Yup.string().required('Required')
+        },
         format : {
             label : 'Format',
             type : 'text',
@@ -33,14 +47,14 @@ export default function CreateNoteDialog({ closeDialog, jwt }){
         ...select(format, {
             'material' : {
                 quantity : {
-                    label : 'Note code',
+                    label : 'Quantity',
                     type : 'text',
                     placeholder : '300',
                     initial : null,
                     validation : Yup.string().required('Required')
                 },
                 unit : {
-                    label : 'Email',
+                    label : 'Unit',
                     type : 'text',
                     placeholder : 'Kg',
                     initial : null,
@@ -49,14 +63,14 @@ export default function CreateNoteDialog({ closeDialog, jwt }){
             },
             'hours' : {
                 hours : {
-                    label : 'Note code',
+                    label : 'Hours',
                     type : 'text',
                     placeholder : '8',
                     initial : null,
                     validation : Yup.string().required('Required')
                 },
                 description : {
-                    label : 'Email',
+                    label : 'Description',
                     type : 'text',
                     placeholder : 'albañilería',
                     initial : null,
@@ -65,7 +79,7 @@ export default function CreateNoteDialog({ closeDialog, jwt }){
             }
         }), 
         price : {
-            label : 'Email',
+            label : 'Price',
             type : 'text',
             placeholder : '20',
             initial : null,
@@ -75,21 +89,24 @@ export default function CreateNoteDialog({ closeDialog, jwt }){
 
     const createNote = async (values) => {
     
-            if(!jwt) return;
-    
-            const [_, error] = await try_catch(deliverynotes_api.post.one(values, jwt));
-    
-            if(error) setAlert({ // Show error message
-                visible : true,
-                message : 'An error occurred while creating the delivery note',
-                iconURL : '/multimedia/img/icons/delete.svg'
-            }); 
-            else setAlert({ // Show success message
-                visible : true,
-                message : 'Delivery note created successfully',
-                iconURL : '/multimedia/img/icons/confirm.svg'
-            }); 
-        }
+        if(!jwt) return;
+
+        console.log(values);
+
+        const [_, error] = await try_catch(deliverynotes_api.post.one(values, jwt));
+
+        if(error) setAlert({ // Show error message
+            visible : true,
+            message : 'An error occurred while creating the delivery note',
+            iconURL : '/multimedia/img/icons/delete.svg'
+        });
+
+        else setAlert({ // Show success message
+            visible : true,
+            message : 'Delivery note created successfully',
+            iconURL : '/multimedia/img/icons/confirm.svg'
+        }); 
+    }
 
     function closeAlert(){
         setAlert({ ...alert, visible : false });

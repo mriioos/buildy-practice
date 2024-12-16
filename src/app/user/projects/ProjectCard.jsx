@@ -136,15 +136,14 @@ export default function ProjectCard({ project, setAlert, jwt }){
             iconURL : '/multimedia/img/icons/confirm.svg'
         });
     }
-
-    console.log(project)
-
+    
     return (
         <div className="flex flex-col w-full h-fit p-2 rounded-md border-2">
             <div className="flex flex-row w-full h-fit">
                 <div className="w-full h-fit mr-6">
                     <div className="flex justify-between items-center">
                         <h1 className="text-lg">{project.name}</h1>
+                        <p className="text-lg text-slate-600 text-d">({project._id})</p>
                         <p className={`text-lg font-bold ${project.active ? 'text-yellow-600' : 'text-green-600'}`}>{project.active ? 'PENDING' : 'COMPLETED'}</p>
                     </div> 
                     <p className="text-slate-600">{project.address.street} {project.address.number}, {project.address.postal} {project.address.city}, {project.address.province}</p>
