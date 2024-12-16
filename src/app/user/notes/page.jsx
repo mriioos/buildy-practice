@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from 'react';
 
-import { notes_api } from '@/utils/endpoints/deliverynotes.js';
+import { deliverynotes_api } from '@/utils/endpoints/deliverynotes.js';
 import { try_catch, select } from '@/utils/tools.js';
 
 import MainContentLayout from '../MainContentLayout.jsx';
 import ContentPad from '@/components/actuators/figures/ContentPad.jsx';
 
 import NotesOverview from './NotesOverview.jsx';
-import CreateNoteDialog from './NotesClientDialog.jsx';
+import CreateNoteDialog from './CreateNoteDialog.jsx';
 
 export default function Notes(){
 
@@ -51,7 +51,7 @@ export default function Notes(){
         // Fetch data using an async IIFE
         (async () => {
 
-            const [notes_all, notes_error] = await try_catch(notes_api.get.all(jwt));
+            const [notes_all, notes_error] = await try_catch(deliverynotes_api.get.all(jwt));
 
             if(notes_error) console.error(notes_error);
 

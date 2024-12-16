@@ -36,7 +36,7 @@ export default function Login(){
             localStorage.setItem('bildyJWT', success.token);
             router.push('/');
         }
-        else alert(error.message)
+        else alert(error)
     }
 
     return (

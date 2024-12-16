@@ -4,26 +4,11 @@ import Image from 'next/image';
 import * as Yup from 'yup'
 import { useState } from 'react';
 import { try_catch } from '@/utils/tools.js';
-import { notes_api } from '@/utils/endpoints/notes';
+import { notes_api } from '@/utils/endpoints/deliverynotes.js';
 
 export default function NoteCard({ note, setAlert, jwt }){
 
     const [isOpen, setIsOpen] = useState(false);
-
-    {
-        "format": "material",
-        "name": "Cemento",
-        "quantity": 300,
-        "unit": "Kg",
-        "price": 2
-    },
-    {
-        "format": "hours",
-        "name": "Francisco Gutierrez",
-        "hours": 8,
-        "description": "albañilería",
-        "price": 20
-    }
 
 
     const getFields = (format) => select(format, {
@@ -166,7 +151,7 @@ export default function NoteCard({ note, setAlert, jwt }){
                     <div className="w-full h-fit flex justify-center items-center mt-4"> 
                         <EasyForm
                             title=""
-                            fields={fields}
+                            fields={getFields(note.format)}
                             handleSubmit={editNote}
                             submit_button_text="Save" 
                             custom_styles={null}

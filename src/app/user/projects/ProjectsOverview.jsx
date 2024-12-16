@@ -18,7 +18,7 @@ const ProjectsOverview = ({ projects, openCreateProjectDialog, jwt, reloadProjec
         <>
             {alert.visible && <Alert message={alert.message} iconURL={alert.iconURL} close={closeAlert} />}
             {console.log(projects)}
-            {!projects.length
+            {!projects?.length
             ? <NoProjects openCreateDialog={openCreateProjectDialog} img_src="/multimedia/img/project.png" label="Project"/> 
             : <>
                 <div className="flex flex-col gap-y-4 h-[65vh] overflow-y-auto pr-2">

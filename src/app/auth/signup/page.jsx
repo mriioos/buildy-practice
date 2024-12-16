@@ -69,7 +69,7 @@ export default function SignUp(){
             localStorage.setItem('bildyJWT', success.token);
             router.push('/auth/validation');
         }
-        else alert(error.message)
+        else alert(error)
     }
 
     return (

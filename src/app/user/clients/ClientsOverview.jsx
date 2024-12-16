@@ -17,7 +17,7 @@ const ClientsOverview = ({ clients, openCreateClientDialog, jwt, reloadClients }
     return (
         <>
             {alert.visible && <Alert message={alert.message} iconURL={alert.iconURL} close={closeAlert} />}
-            {!clients.length
+            {!clients?.length
             ? <NoClients openCreateDialog={openCreateClientDialog} img_src="/multimedia/img/client.png" label="Clients"/> 
             : <>
                 <div className="flex flex-col gap-y-4 h-[65vh] overflow-y-auto pr-2">

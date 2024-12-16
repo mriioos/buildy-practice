@@ -29,7 +29,7 @@ export default function Validation(){
         const [success, error] = await try_catch(validate(values, token));
 
         if(success) router.push('/');
-        else alert(error.message)
+        else alert(error)
     }
 
     return (
