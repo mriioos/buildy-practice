@@ -138,7 +138,7 @@ export default function ProjectCard({ project, setAlert, setProject, jwt }){
     }
 
     return (
-        <div className="flex flex-col w-full h-fit p-2 rounded-md border-2 hover:border-black cursor-pointer" onClick={() => setProject(project._id)}>
+        <div className="flex flex-col w-full h-fit p-2 rounded-md border-2 hover:border-black cursor-pointer" onClick={() => setProject(project)}>
             <div className="flex flex-row w-full h-fit">
                 <div className="w-full h-fit mr-6">
                     <div className="flex justify-between items-center">
