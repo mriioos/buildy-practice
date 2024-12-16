@@ -31,7 +31,7 @@ export default function Clients(){
 
     // Check if user is logged in
     const [jwt, setJwt] = useState(null);
-    
+
     // Fetch clients data
     useEffect(() => {
     

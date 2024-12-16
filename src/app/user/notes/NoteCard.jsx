@@ -4,74 +4,69 @@ import Image from 'next/image';
 import * as Yup from 'yup'
 import { useState } from 'react';
 import { try_catch } from '@/utils/tools.js';
-import { notes_api } from '@/utils/endpoints/deliverynotes.js';
+import { deliverynotes_api } from '@/utils/endpoints/deliverynotes.js';
 
 export default function NoteCard({ note, setAlert, jwt }){
 
     const [isOpen, setIsOpen] = useState(false);
 
-
-    const getFields = (format) => select(format, {
-        'material' : {
-            // Format debe ser un field no editable (Añadir esa funcionalidad)
-            name : {
-                label : 'Name of the note',
-                type : 'text',
-                placeholder : 'Example note',
-                initial : null,
-                validation : Yup.string().required('Required')
-            },
-            quantity : {
-                label : 'Note code',
-                type : 'text',
-                placeholder : '300',
-                initial : null,
-                validation : Yup.string().required('Required')
-            },
-            unit : {
-                label : 'Email',
-                type : 'text',
-                placeholder : 'Kg',
-                initial : null,
-                validation : Yup.string().required('Required')
-            },
-            price : {
-                label : 'Email',
-                type : 'text',
-                placeholder : '2',
-                initial : null,
-                validation : Yup.string().required('Required')
-            }
+    const getFields = (format) => ({
+        format : {
+            label : 'Format',
+            type : 'text',
+            placeholder : 'Material',
+            initial : format,
+            validation : Yup.string().required('Required'),
+            readOnly : true,
+            hidden : true
         },
-        'hours' : {
-            name : {
-                label : 'Name of the note',
-                type : 'text',
-                placeholder : 'Francisco Gutierrez',
-                initial : null,
-                validation : Yup.string().required('Required')
+        name : {
+            label : 'Name of the note',
+            type : 'text',
+            placeholder : 'Example note',
+            initial : '',
+            validation : Yup.string().required('Required')
+        },
+        ...select(format, {
+            'material' : {
+                quantity : {
+                    label : 'Note code',
+                    type : 'text',
+                    placeholder : '300',
+                    initial : null,
+                    validation : Yup.string().required('Required')
+                },
+                unit : {
+                    label : 'Email',
+                    type : 'text',
+                    placeholder : 'Kg',
+                    initial : null,
+                    validation : Yup.string().required('Required')
+                }
             },
-            hours : {
-                label : 'Note code',
-                type : 'text',
-                placeholder : '8',
-                initial : null,
-                validation : Yup.string().required('Required')
-            },
-            description : {
-                label : 'Email',
-                type : 'text',
-                placeholder : 'albañilería',
-                initial : null,
-                validation : Yup.string().required('Required')
-            },
-            price : {
-                label : 'Email',
-                type : 'text',
-                placeholder : '20',
-                initial : null,
-                validation : Yup.string().required('Required')
+            'hours' : {
+                hours : {
+                    label : 'Note code',
+                    type : 'text',
+                    placeholder : '8',
+                    initial : null,
+                    validation : Yup.string().required('Required')
+                },
+                description : {
+                    label : 'Email',
+                    type : 'text',
+                    placeholder : 'albañilería',
+                    initial : null,
+                    validation : Yup.string().required('Required')
+                }
             }
+        }), 
+        price : {
+            label : 'Email',
+            type : 'text',
+            placeholder : '20',
+            initial : null,
+            validation : Yup.string().required('Required')
         }
     });
 
@@ -82,19 +77,14 @@ export default function NoteCard({ note, setAlert, jwt }){
 
         setIsOpen(false);
         
-        const [_, error] = await try_catch(notes_api.put.one(note._id, {
-            name : values.name,
-            noteCode : values.noteCode,
-            email : values.email,
-            address : {
-                street : values.street,
-                number : values.number,
-                postal : values.postal,
-                city : values.city,
-                province : values.province
-            },
-            code : values.code,
-            clientId : values.clientId
+        const [_, error] = await try_catch(deliverynotes_api.put.one(note._id, {
+            'clientId' : note.clientId,
+            'projectId' : note.projectId,
+            'format' : 'material or hours',
+            'material':  'type of material',
+            'hours' : 8,
+            'description' : 'my description',
+            'workdate' : '2/1/2024'
         }, 
         jwt));
 
@@ -115,7 +105,7 @@ export default function NoteCard({ note, setAlert, jwt }){
 
         setIsOpen(false);
 
-        const [_, error] = await try_catch(notes_api.delete.one(note._id, jwt));
+        const [_, error] = await try_catch(deliverynotes_api.delete.one(note._id, jwt));
 
         if(error) setAlert({ // Show error message
             message : 'An error occurred while deleting the note',

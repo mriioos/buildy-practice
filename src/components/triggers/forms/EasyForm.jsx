@@ -20,7 +20,9 @@ import * as Yup from 'yup'
  *      type : string,
  *      placeholder : string,
  *      initial : string,
- *      validation : Yup
+ *      validation : Yup,
+ *      hidden : boolean,
+ *      readOnly : boolean
  * }
  */
 
@@ -97,9 +99,9 @@ export default function EasyForm({ title, fields, handleSubmit, submit_button_te
 
         // Create a single field
         return(
-            <div key={key} className={`${form_styles['easy-form-field']}`}>
+            <div key={key} hidden={!!component.hidden} className={`${form_styles['easy-form-field']}`}>
                 <label htmlFor={key}>{component.label}</label>
-                <Field name={key} type={component.type} placeholder={component.placeholder} className="pl-2 bg-slate-100"/>
+                <Field name={key} readOnly={!!component.readOnly} type={component.type} placeholder={component.placeholder} className="pl-2 bg-slate-100"/>
                 <ErrorMessage name={key} component="div" style={{ color: 'red' }} />
             </div>
         )

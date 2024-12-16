@@ -36,13 +36,13 @@ export default function Notes(){
         'Price': selected_item.price
     });
 
-    // Current of the page controller (overview of clients or creating client)
+    // Current of the page controller (overview of notes or creating note)
     const [page_state, setPageState] = useState('overview');
 
     // Check if user is logged in
     const [jwt, setJwt] = useState(null);
     
-    // Fetch clients data
+    // Fetch notes data
     useEffect(() => {
     
         // Ensure jwt is available
@@ -64,7 +64,7 @@ export default function Notes(){
         <MainContentLayout title="Notes" subtitle="Generate a new note" setJwt={setJwt} searchItems={notes} searchGet={searchGet}> 
             {
                 (select(page_state, {
-                    'overview' : <ContentPad><NotesOverview notes={notes} openCreateClientDialog={() => setPageState('create')} jwt={jwt} reloadNotes={reloadNotes}/></ContentPad>,
+                    'overview' : <ContentPad><NotesOverview notes={notes} openCreateNoteDialog={() => setPageState('create')} jwt={jwt} reloadNotes={reloadNotes}/></ContentPad>,
                     'create' : <CreateNoteDialog closeDialog={() => setPageState('overview')} jwt={jwt}/>
                 }))
             }

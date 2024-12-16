@@ -17,7 +17,6 @@ const NotesOverview = ({ notes, openCreateNoteDialog, jwt, reloadNotes }) => {
     return (
         <>
             {alert.visible && <Alert message={alert.message} iconURL={alert.iconURL} close={closeAlert} />}
-            {console.log(notes)}
             {!notes?.length
             ? <NoNotes openCreateDialog={openCreateNoteDialog} img_src="/multimedia/img/note.png" label="Note"/> 
             : <>

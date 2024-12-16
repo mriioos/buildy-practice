@@ -46,6 +46,37 @@ async function post_one({ clientId, projectId, format, material, hours, descript
     })
 }
 
+async function put_one(note_id, { clientId, projectId, format, material, hours, description, workdate }, token){ // PUT /api/deliverynote/{id}
+    
+    return await fetch(`${config.domain}/api/deliverynote/${note_id}`, {
+        method : 'PUT',
+        headers : {
+            'Content-Type' : 'application/json',
+            'Authorization' : `Bearer ${token}`
+        },
+        body : JSON.stringify({ 
+            clientId : clientId, 
+            projectId : projectId, 
+            format : format, 
+            material : material, 
+            hours : hours, 
+            description : description, 
+            workdate : workdate 
+        })
+    })
+}
+
+async function delete_one(note_id, token){ // DELETE /api/deliverynote/{id}
+        
+    return await fetch(`${config.domain}/api/deliverynote/${note_id}`, {
+        method : 'DELETE',
+        headers : {
+            'Content-Type' : 'application/json',
+            'Authorization' : `Bearer ${token}`
+        }
+    })
+}
+
 export const deliverynotes_api = {
     get : {
         pdf : get_pdf,
@@ -53,5 +84,11 @@ export const deliverynotes_api = {
     },
     post : {
         one : post_one
+    },
+    put : {
+        one : put_one
+    },
+    delete : {
+        one : delete_one
     }
 };

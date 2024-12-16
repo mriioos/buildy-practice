@@ -17,7 +17,6 @@ const ProjectsOverview = ({ projects, openCreateProjectDialog, jwt, reloadProjec
     return (
         <>
             {alert.visible && <Alert message={alert.message} iconURL={alert.iconURL} close={closeAlert} />}
-            {console.log(projects)}
             {!projects?.length
             ? <NoProjects openCreateDialog={openCreateProjectDialog} img_src="/multimedia/img/project.png" label="Project"/> 
             : <>
