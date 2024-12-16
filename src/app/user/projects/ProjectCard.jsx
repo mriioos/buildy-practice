@@ -1,114 +1,138 @@
 import EasyForm from '@/components/triggers/forms/EasyForm';
-import DeleteClientButton from "@/components/triggers/buttons/DefaultButton.jsx";
+import DeleteProjectButton from "@/components/triggers/buttons/DefaultButton.jsx";
 import Image from 'next/image';
 import * as Yup from 'yup'
 import { useState } from 'react';
-import { clients_api } from '@/utils/endpoints/clients.js';
 import { try_catch } from '@/utils/tools.js';
+import { projects_api } from '@/utils/endpoints/projects';
 
-export default function ClientCard({ client, setAlert, jwt }){
+export default function ProjectCard({ project, setAlert, jwt }){
 
     const [isOpen, setIsOpen] = useState(false);
 
     const fields = {
         name : {
-            label : 'Name of the client or company',
+            label : 'Name of the project',
             type : 'text',
-            placeholder : 'John Doe',
-            initial : client.name,
+            placeholder : 'Example project',
+            initial : project.name,
             validation : Yup.string().required('Required')
         },
-        "Tax domicile" : {
+        projectCode : {
+            label : 'Project code',
+            type : 'text',
+            placeholder : '123456',
+            initial : project.projectCode,
+            validation : Yup.string().required('Required')
+        },
+        email : {
+            label : 'Email',
+            type : 'text',
+            placeholder : 'youremail@yourdomain.com',
+            initial : project.email,
+            validation : Yup.string().email('Invalid email').required('Required')
+        },
+        "Address" : {
             province : {
                 label : '',
                 type : 'text',
                 placeholder : 'Province Name',
-                initial : client.address.province,
+                initial : project.address.province,
                 validation : Yup.string().required('Required')
             },
             city : {
                 label : '',
                 type : 'text',
                 placeholder : 'City Name',
-                initial : client.address.city,
+                initial : project.address.city,
                 validation : Yup.string().required('Required')
             },  
             street : {
                 label : '',
                 type : 'text',
                 placeholder : 'Street Name',
-                initial : client.address.street,
+                initial : project.address.street,
                 validation : Yup.string().required('Required')
             },
             number : {
                 label : '',
                 type : 'text',
                 placeholder : 'House number',
-                initial : client.address.number,
+                initial : project.address.number,
                 validation : Yup.string().required('Required')
             },
-            postal_code : {
+            postal : {
                 label : '',
                 type : 'text',
                 placeholder : 'Postal Code',
-                initial : client.address.postal,
+                initial : project.address.postal,
                 validation : Yup.string().required('Required')
             }
         },
-        cif : {
-            label : 'NIF (optional)',
+        code : {
+            label : 'Internal code',
             type : 'text',
-            placeholder : '12345678A',
-            initial : client.cif,
-            validation : Yup.string()
+            placeholder : '123456',
+            initial : project.code,
+            validation : Yup.string().required('Required')
+        },
+        clientId : {
+            label : 'Client ID',
+            type : 'text',
+            placeholder : '123456',
+            initial : project.clientId,
+            validation : Yup.string().required('Required')
         }
     }
 
-    const editClient = async (values) => {
+    const editProject = async (values) => {
 
         // Ensure jwt is available
         if(!jwt) return;
 
         setIsOpen(false);
         
-        const [_, error] = await try_catch(clients_api.put.one(client._id, { 
+        const [_, error] = await try_catch(projects_api.put.one(project._id, {
             name : values.name,
-            cif : values.cif,
+            projectCode : values.projectCode,
+            email : values.email,
             address : {
                 street : values.street,
                 number : values.number,
-                postal : values.postal_code,
+                postal : values.postal,
                 city : values.city,
                 province : values.province
-            }
+            },
+            code : values.code,
+            clientId : values.clientId
         }, 
         jwt));
 
         if(error) setAlert({ // Show error message
-            message : 'An error occurred while creating the client',
+            message : 'An error occurred while creating the project',
             iconURL : '/multimedia/img/icons/delete.svg'
         }); 
         else setAlert({ // Show success message
-            message : 'Client updated successfully',
+            message : 'Project updated successfully',
             iconURL : '/multimedia/img/icons/confirm.svg'
         }); 
     }
 
-    const deleteClient = async () => {
+    const deleteProject = async () => {
 
         // Ensure jwt is available
         if(!jwt) return;
 
         setIsOpen(false);
 
-        const [_, error] = await try_catch(clients_api.delete.one(client._id, jwt));
+        const [_, error] = await try_catch(projects_api.delete.one(project._id, jwt));
 
         if(error) setAlert({ // Show error message
-            message : 'An error occurred while deleting the client',
+            message : 'An error occurred while deleting the project',
             iconURL : '/multimedia/img/icons/delete.svg'
         }); 
         else setAlert({ // Show success message
-            message : 'Client deleted successfully',
+            message : 'Project deleted successfully',
             iconURL : '/multimedia/img/icons/confirm.svg'
         });
     }
@@ -118,11 +142,10 @@ export default function ClientCard({ client, setAlert, jwt }){
             <div className="flex flex-row w-full h-fit">
                 <div className="w-full h-fit mr-6">
                     <div className="flex justify-between items-center">
-                        <h1 className="text-lg">{client.name}</h1>
-                        <p className="text-lg text-slate-600 text-d">({client._id})</p>
-                        <p className="text-lg">{client.cif}</p>
+                        <h1 className="text-lg">{project.name}</h1>
+                        <p className="text-lg">{project.cif}</p>
                     </div> 
-                    <p className="text-slate-600 text-d">{client.address.street} {client.address.number}, {client.address.postal} {client.address.city}, {client.address.province}</p>
+                    <p className="text-slate-600 text-d">{project.address.street} {project.address.number}, {project.address.postal} {project.address.city}, {project.address.province}</p>
                 </div>
                 <div onClick={() => setIsOpen(!isOpen)} className="cursor-pointer flex justify-center items-center w-fit h-fit">
                     <Image
@@ -139,13 +162,13 @@ export default function ClientCard({ client, setAlert, jwt }){
                         <EasyForm
                             title=""
                             fields={fields}
-                            handleSubmit={editClient}
+                            handleSubmit={editProject}
                             submit_button_text="Save" 
                             custom_styles={null}
                             toFormikValidationSchema={Yup.object}
                         />
                     </div>
-                    <DeleteClientButton onClick={deleteClient} text="Delete" className="w-[15%] mt-4 to-red-500"/>
+                    <DeleteProjectButton onClick={deleteProject} text="Delete" className="w-[15%] mt-4 to-red-500"/>
                 </>
             }
         </div>

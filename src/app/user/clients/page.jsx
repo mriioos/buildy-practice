@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { clients_api } from '@/utils/endpoints/clients.js';
 import { try_catch, select } from '@/utils/tools.js';
 
-
 import MainContentLayout from '../MainContentLayout.jsx';
 import ContentPad from '@/components/actuators/figures/ContentPad.jsx';
 
@@ -21,9 +20,14 @@ export default function Clients(){
 
     const [clients, setClients] = useState([]);
 
+    const searchGet = (selected_item) => ({
+        'Name': selected_item.name,
+        'CIF': selected_item.cif,
+        'Address': `${selected_item.address.street} ${selected_item.address.number}, ${selected_item.address.postal} ${selected_item.address.city}, ${selected_item.address.province}`
+    });
+
     // Current of the page controller (overview of clients or creating client)
     const [page_state, setPageState] = useState('overview');
-    //let state = 'overview';
 
     // Check if user is logged in
     const [jwt, setJwt] = useState(null);
@@ -47,7 +51,7 @@ export default function Clients(){
     }, [jwt, reload]);
 
     return (
-        <MainContentLayout title="Clients" subtitle="Name, email and CIF" setJwt={setJwt}> 
+        <MainContentLayout title="Clients" subtitle="Name, email and CIF" setJwt={setJwt} searchItems={clients} searchGet={searchGet}> 
             {
                 (select(page_state, {
                     'overview' : <ContentPad><ClientsOverview clients={clients} openCreateClientDialog={() => setPageState('create')} jwt={jwt} reloadClients={reloadClients}/></ContentPad>,

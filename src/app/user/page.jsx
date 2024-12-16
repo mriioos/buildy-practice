@@ -2,7 +2,7 @@
 import { clients_api } from '@/utils/endpoints/clients.js';
 import { deliverynotes_api } from '@/utils/endpoints/deliverynotes.js';
 import { projects_api } from '@/utils/endpoints/projects.js';
-import { try_catch } from '@/utils/tools';
+import { try_catch, select } from '@/utils/tools';
 
 import { useEffect, useState } from 'react';
 
@@ -17,6 +17,47 @@ export default function UserSummary(){
         deliverynotes : [], 
         projects : []
     });
+
+    // Function to get user data as a unique array
+    function getUserData(){
+
+        // Return all items with their type
+        return Object.entries(user_data).map(([key, items]) => {
+
+            // Return items with type on each item
+            return items.map(item => ({
+                ...item,
+                type : key
+            }));
+        }).flat();
+    }
+
+    function searchGet(item){
+        return select(item.type, {
+            'clients': (selected_item) => ({
+                'Name': selected_item.name,
+                'CIF': selected_item.cif,
+                'Address': `${selected_item.address.street} ${selected_item.address.number}, ${selected_item.address.postal} ${selected_item.address.city}, ${selected_item.address.province}`
+            }),
+            'deliverynotes': (selected_item) => ({
+                'Format': selected_item.format,
+                'Hours': selected_item.hours,
+                'Description': selected_item.description,
+                'Sign': selected_item.sign,
+                'Pending': selected_item.pending,
+                'Created at': selected_item.createdAt,
+                'Updated at': selected_item.updatedAt
+            }),
+            'projects': (selected_item) => ({
+                'Name': selected_item.name,
+                'Code': selected_item.code,
+                'Created at': selected_item.createdAt,
+                'Updated at': selected_item.updatedAt,
+                'Address': `${selected_item.address.street} ${selected_item.address.number}, ${selected_item.address.postal} ${selected_item.address.city}, ${selected_item.address.province}`
+            })
+        })(item);
+    }
+
 
     const [jwt, setJwt] = useState(null);
 
@@ -48,7 +89,7 @@ export default function UserSummary(){
     )
 
     return (
-        <MainContentLayout title="Summary" subtitle="Everything you need" setJwt={setJwt}>
+        <MainContentLayout title="Summary" subtitle="Everything you need" setJwt={setJwt} searchItems={getUserData()} searchGet={searchGet}>
             <ContentPad>
                 <h1 className="w-fit text-3xl border-b-[2px] pl-4 pr-4 mt-[5%] mr-auto ml-auto">You currently have a total of</h1>
                 <div className="flex-grow flex flex-col gap-y-4 justify-center items-center">

@@ -2,7 +2,7 @@
 
 import { config, handler_json } from '@/utils/api_handler.js';
 
-export async function get_one(id, token){
+async function get_one(id, token){
 
     return await fetch(`${config.domain}/api/project/one/${id}`, {
         method : 'GET',
@@ -14,7 +14,7 @@ export async function get_one(id, token){
     .then(handler_json);
 }
 
-export async function get_all(token){
+async function get_all(token){
 
     return await fetch(`${config.domain}/api/project`, {
         method : 'GET',
@@ -26,7 +26,7 @@ export async function get_all(token){
     .then(handler_json);
 }
 
-export async function post_one({ name, projectCode, email, address : { street, number, postal, city, province }, code, clientId }, token){
+async function post_one({ name, projectCode, email, address : { street, number, postal, city, province }, code, clientId }, token){
     
     return await fetch(`${config.domain}/api/project`, {
         method : 'POST',
@@ -52,7 +52,7 @@ export async function post_one({ name, projectCode, email, address : { street, n
     .then(handler_json);
 }
 
-export async function put_one(id, { name, code, projectCode, email, clientId, address: { street, number, postal, city, province }, notes }, token){
+async function put_one(id, { name, code, projectCode, email, clientId, address: { street, number, postal, city, province }, notes }, token){
         
     return await fetch(`${config.domain}/api/project/${id}`, {
         method : 'PUT',
@@ -79,6 +79,17 @@ export async function put_one(id, { name, code, projectCode, email, clientId, ad
     .then(handler_json);
 }
 
+async function delete_one(project_id, token){
+    return await fetch(`${config.domain}/api/project/${project_id}`, {
+        method : 'DELETE',
+        headers : {
+            'Content-Type' : 'application/json',
+            'Authorization' : `Bearer ${token}`
+        }
+    })
+    .then(handler_json);
+}
+
 export const projects_api = {
     get : {
         one : get_one,
@@ -89,5 +100,8 @@ export const projects_api = {
     },
     put : {
         one : put_one
+    },
+    delete : {
+        one : delete_one
     }
 };

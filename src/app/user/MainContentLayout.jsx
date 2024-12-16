@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
  * @param {*} page_title 
  */
 // Este patrón me parece terrible pero no se me ocurre otra forma de hacer lo que quiero sin sacrificar mil horas de trabajo
-export default function MainContentLayout({ title, subtitle, setJwt, children }){
+export default function MainContentLayout({ title, subtitle, setJwt, searchItems, searchGet, children }){
 
     const router = useRouter();
 
@@ -22,7 +22,7 @@ export default function MainContentLayout({ title, subtitle, setJwt, children })
 
     return (
         <>
-            <TopBar page_title={title} page_subtitle={subtitle}/> {/* Top Bar */}
+            <TopBar page_title={title} page_subtitle={subtitle} searchItems={searchItems} similarityFunction={null} searchGet={searchGet}/> {/* Top Bar */}
             <section className="flex-grow flex p-4"> {/* Main Content */}
                 {children}
             </section>
