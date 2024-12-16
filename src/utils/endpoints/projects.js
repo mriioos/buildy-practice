@@ -26,6 +26,18 @@ async function get_all(token){
     .then(handler_json);
 }
 
+async function get_all_by_client(client_id, token){
+
+    return await fetch(`${config.domain}/api/project/${client_id}`, {
+        method : 'GET',
+        headers : {
+            'Content-Type' : 'application/json',
+            'Authorization' : `Bearer ${token}`
+        }
+    })
+    .then(handler_json);
+}
+
 async function post_one({ name, projectCode, email, address : { street, number, postal, city, province }, code, clientId }, token){
     
     return await fetch(`${config.domain}/api/project`, {
@@ -93,7 +105,8 @@ async function delete_one(project_id, token){
 export const projects_api = {
     get : {
         one : get_one,
-        all : get_all
+        all : get_all,
+        all_by_client : get_all_by_client
     },
     post : {
         one : post_one

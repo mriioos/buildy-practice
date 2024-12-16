@@ -31,3 +31,12 @@ export async function handler_text(response){
     ? await response.text()
     : Promise.reject(select(response.status, error_messages));
 }
+
+// Response handler for blob body
+export async function handler_blob(response){
+
+    // Give feedback on error
+    return response.ok 
+    ? await response.blob()
+    : Promise.reject(select(response.status, error_messages));
+}

@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { try_catch } from '@/utils/tools.js';
 import { projects_api } from '@/utils/endpoints/projects';
 
-export default function ProjectCard({ project, setAlert, jwt }){
+export default function ProjectCard({ project, setAlert, setProject, jwt }){
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -136,16 +136,16 @@ export default function ProjectCard({ project, setAlert, jwt }){
             iconURL : '/multimedia/img/icons/confirm.svg'
         });
     }
-    
+
     return (
-        <div className="flex flex-col w-full h-fit p-2 rounded-md border-2">
+        <div className="flex flex-col w-full h-fit p-2 rounded-md border-2 hover:border-black cursor-pointer" onClick={() => setProject(project._id)}>
             <div className="flex flex-row w-full h-fit">
                 <div className="w-full h-fit mr-6">
                     <div className="flex justify-between items-center">
                         <h1 className="text-lg">{project.name}</h1>
-                        <p className="text-lg text-slate-600 text-d">({project._id})</p>
                         <p className={`text-lg font-bold ${project.active ? 'text-yellow-600' : 'text-green-600'}`}>{project.active ? 'PENDING' : 'COMPLETED'}</p>
                     </div> 
+                    <p className="text-lg text-slate-600 text-d">({project._id})</p>
                     <p className="text-slate-600">{project.address.street} {project.address.number}, {project.address.postal} {project.address.city}, {project.address.province}</p>
                     <p className="text-slate-600">Last update: {
                     (() => {
@@ -154,7 +154,7 @@ export default function ProjectCard({ project, setAlert, jwt }){
                     })()}
                     </p>
                 </div>
-                <div onClick={() => setIsOpen(!isOpen)} className="cursor-pointer flex justify-center items-center w-fit h-fit">
+                <div onClick={(event) => {event.stopPropagation(); setIsOpen(!isOpen);}} className="cursor-pointer flex justify-center items-center w-fit h-fit hover:scale-110">
                     <Image
                         src={`/multimedia/img/icons/${isOpen ? 'delete' : 'edit'}.svg`}
                         alt="Edit Icon"

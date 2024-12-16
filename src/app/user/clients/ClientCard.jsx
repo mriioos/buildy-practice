@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { clients_api } from '@/utils/endpoints/clients.js';
 import { try_catch } from '@/utils/tools.js';
 
-export default function ClientCard({ client, setAlert, jwt }){
+export default function ClientCard({ client, setAlert, setClient, jwt }){
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -114,17 +114,17 @@ export default function ClientCard({ client, setAlert, jwt }){
     }
 
     return (
-        <div className="flex flex-col w-full h-fit p-2 rounded-md border-2">
+        <div className="flex flex-col w-full h-fit p-2 rounded-md border-2 hover:border-black cursor-pointer" onClick={() => setClient(client._id)}>
             <div className="flex flex-row w-full h-fit">
                 <div className="w-full h-fit mr-6">
                     <div className="flex justify-between items-center">
                         <h1 className="text-lg">{client.name}</h1>
-                        <p className="text-lg text-slate-600 text-d">({client._id})</p>
                         <p className="text-lg">{client.cif}</p>
                     </div> 
+                    <p className="text-lg text-slate-600 text-d">({client._id})</p>
                     <p className="text-slate-600 text-d">{client.address.street} {client.address.number}, {client.address.postal} {client.address.city}, {client.address.province}</p>
                 </div>
-                <div onClick={() => setIsOpen(!isOpen)} className="cursor-pointer flex justify-center items-center w-fit h-fit">
+                <div onClick={(event) => {event.stopPropagation(); setIsOpen(!isOpen);}} className="cursor-pointer flex justify-center items-center w-fit h-fit hover:scale-110">
                     <Image
                         src={`/multimedia/img/icons/${isOpen ? 'delete' : 'edit'}.svg`}
                         alt="Edit Icon"

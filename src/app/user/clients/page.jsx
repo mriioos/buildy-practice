@@ -6,8 +6,6 @@ import { clients_api } from '@/utils/endpoints/clients.js';
 import { try_catch, select } from '@/utils/tools.js';
 
 import MainContentLayout from '../MainContentLayout.jsx';
-import ContentPad from '@/components/actuators/figures/ContentPad.jsx';
-
 import ClientsOverview from './ClientsOverview.jsx';
 import CreateClientDialog from './CreateClientDialog.jsx';
 
@@ -54,7 +52,7 @@ export default function Clients(){
         <MainContentLayout title="Clients" subtitle="Name, email and CIF" setJwt={setJwt} searchItems={clients} searchGet={searchGet}> 
             {
                 (select(page_state, {
-                    'overview' : <ContentPad><ClientsOverview clients={clients} openCreateClientDialog={() => setPageState('create')} jwt={jwt} reloadClients={reloadClients}/></ContentPad>,
+                    'overview' : <ClientsOverview clients={clients} openCreateClientDialog={() => setPageState('create')} jwt={jwt} reloadClients={reloadClients}/>,
                     'create' : <CreateClientDialog closeDialog={() => setPageState('overview')} jwt={jwt}/>
                 }))
             }

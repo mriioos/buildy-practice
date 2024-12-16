@@ -127,7 +127,18 @@ export default function CreateClientDialog({ closeDialog, jwt }){
             </ContentPad>
             <div className="flex-grow max-w-[40%] flex flex-col">
                 <ContentPad>
-                    <p>???</p>
+                    <div className="w-full h-full">
+                        <h1 className="text-2xl text-left">Client logo</h1>
+                        <div className="cursor-pointer w-full h-[80%] flex flex-col justify-center items-center rounded-md border-4 border-dashed mt-2">
+                            <Image
+                                src="/multimedia/img/icons/user.svg"
+                                alt="Client image"
+                                height={120}
+                                width={120}
+                            />
+                        </div>
+                        
+                    </div>
                 </ContentPad>
                 <ContentPad>
                     <p>???</p>

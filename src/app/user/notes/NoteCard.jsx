@@ -6,11 +6,9 @@ import { useState } from 'react';
 import { try_catch, select } from '@/utils/tools.js';
 import { deliverynotes_api } from '@/utils/endpoints/deliverynotes.js';
 
-export default function NoteCard({ note, setAlert, jwt }){
+export default function NoteCard({ note, setAlert, setNote, jwt }){
 
     const [isOpen, setIsOpen] = useState(false);
-
-    console.log(note);
 
     const getFields = (format) => ({
         "_ids" : {
@@ -126,17 +124,52 @@ export default function NoteCard({ note, setAlert, jwt }){
         });
     }
 
+    // Function to download the note as pdf
+    const downloadNote = async () => {
+
+        // Ensure jwt is available
+        if(!jwt) return;
+
+        // Fetch the note as pdf
+        const [note_blob, error] = await try_catch(deliverynotes_api.get.pdf(note._id, jwt));
+        
+        // Create url to download the note
+        const url = window.URL.createObjectURL(note_blob);
+
+        // Create a link to download the note
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `deliverynote_${note._id}.pdf`;
+        document.body.appendChild(a);
+
+        // Click the link to download the note
+        a.click();
+
+        // Delete the link
+        a.remove();
+
+        if(error) setAlert({ // Show error message
+            message : 'An error occurred while downloading the note',
+            iconURL : '/multimedia/img/icons/delete.svg'
+        }); 
+
+        else setAlert({ // Show success message
+            message : 'Note should have downloaded successfully',
+            iconURL : '/multimedia/img/icons/confirm.svg'
+        });
+    }
+
     const [format, setFormat] = useState(note.format);
 
     return (
-        <div className="flex flex-col w-full h-fit p-2 rounded-md border-2">
+        <div className="flex flex-col w-full h-fit p-2 rounded-md border-2 hover:border-black cursor-pointer" onClick={() => setNote(note._id)}>
             <div className="flex flex-row w-full h-fit">
                 <div className="w-full h-fit mr-6">
                     <div className="flex justify-between items-center">
                         <h1 className="text-lg">{note.name || 'No name available'}</h1>
-                        <p className="text-lg text-slate-600 text-d">({note._id})</p>
                         <p className={`text-lg font-bold ${note.pending ? 'text-yellow-600' : 'text-green-600'}`}>{note.pending ? 'PENDING' : 'COMPLETED'}</p>
                     </div>
+                    <p className="text-lg text-slate-600 text-d">({note._id})</p>
                     <p className="text-slate-600">Format: {note.format}</p>
                     <p className="text-slate-600">Last update: {
                     (() => {
@@ -145,7 +178,15 @@ export default function NoteCard({ note, setAlert, jwt }){
                     })()}
                     </p>
                 </div>
-                <div onClick={() => setIsOpen(!isOpen)} className="cursor-pointer flex justify-center items-center w-fit h-fit">
+                <div onClick={downloadNote} className="cursor-pointer flex justify-center items-center w-fit h-fit mr-2">
+                    <Image
+                        src={`/multimedia/img/icons/download.svg`}
+                        alt="Edit Icon"
+                        height={25}
+                        width={25}
+                    />
+                </div>
+                <div onClick={(event) => {event.stopPropagation(); setIsOpen(!isOpen);}} className="cursor-pointer flex justify-center items-center w-fit h-fit hover:scale-110">
                     <Image
                         src={`/multimedia/img/icons/${isOpen ? 'delete' : 'edit'}.svg`}
                         alt="Edit Icon"

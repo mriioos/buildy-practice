@@ -6,7 +6,6 @@ import { deliverynotes_api } from '@/utils/endpoints/deliverynotes.js';
 import { try_catch, select } from '@/utils/tools.js';
 
 import MainContentLayout from '../MainContentLayout.jsx';
-import ContentPad from '@/components/actuators/figures/ContentPad.jsx';
 
 import NotesOverview from './NotesOverview.jsx';
 import CreateNoteDialog from './CreateNoteDialog.jsx';
@@ -64,7 +63,7 @@ export default function Notes(){
         <MainContentLayout title="Notes" subtitle="Generate a new note" setJwt={setJwt} searchItems={notes} searchGet={searchGet}> 
             {
                 (select(page_state, {
-                    'overview' : <ContentPad><NotesOverview notes={notes} openCreateNoteDialog={() => setPageState('create')} jwt={jwt} reloadNotes={reloadNotes}/></ContentPad>,
+                    'overview' : <NotesOverview notes={notes} openCreateNoteDialog={() => setPageState('create')} jwt={jwt} reloadNotes={reloadNotes}/>,
                     'create' : <CreateNoteDialog closeDialog={() => setPageState('overview')} jwt={jwt}/>
                 }))
             }

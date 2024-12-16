@@ -5,7 +5,6 @@ import { projects_api } from '@/utils/endpoints/projects.js';
 import { try_catch, select } from '@/utils/tools.js';
 
 import MainContentLayout from '../MainContentLayout.jsx';
-import ContentPad from '@/components/actuators/figures/ContentPad.jsx';
 
 import ProjectsOverview from './ProjectsOverview.jsx';
 import CreateProjectDialog from '../notes/CreateNoteDialog.jsx';
@@ -56,7 +55,7 @@ export default function Projects(){
         <MainContentLayout title="Projects" subtitle="All projects" setJwt={setJwt}  searchItems={projects} searchGet={searchGet}> 
             {
                 (select(page_state, {
-                    'overview' : <ContentPad><ProjectsOverview projects={projects} openCreateProjectDialog={() => setPageState('create')} jwt={jwt} reloadProjects={reloadProjects}/></ContentPad>,
+                    'overview' : <ProjectsOverview projects={projects} openCreateProjectDialog={() => setPageState('create')} jwt={jwt} reloadProjects={reloadProjects}/>,
                     'create' : <CreateProjectDialog closeDialog={() => setPageState('overview')} jwt={jwt}/>
                 }))
             }
